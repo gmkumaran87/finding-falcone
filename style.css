@@ -373,4 +373,11 @@ footer p {
     .show-links {
         height: 7rem;
     }
+    .main-center {
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 2rem 2rem;
+        padding: 5px;
+    }
 }
