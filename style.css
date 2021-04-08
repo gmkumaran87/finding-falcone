@@ -380,4 +380,12 @@ footer p {
         gap: 2rem 2rem;
         padding: 5px;
     }
+    .planets {
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-content: center;
+    }
+    .planetPhoto {
+        display: none;
+    }
 }
