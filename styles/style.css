@@ -163,13 +163,14 @@ nav {
 .container-result {
     color: var(--clr-primary-2);
     letter-spacing: var(--spacing);
-    margin: 40px auto;
+    margin: 20px auto;
     text-align: center;
     font-size: 2.5rem;
 }
 
 .result-btn,
-.result-home {
+.result-home,
+.modal-play {
     font-family: var(--ff-secondary);
     padding: 7px;
     color: var(--clr-primary-2);
@@ -180,8 +181,9 @@ nav {
     background-color: var(--clr-white);
 }
 
-.result-btn,
-.result-home:hover {
+.result-btn:hover,
+.result-home:hover,
+.modal-play:hover {
     color: var(--clr-white);
     background-color: var(--clr-green-light);
     border: 1px solid var(--clr-grey-1);
@@ -315,6 +317,90 @@ footer p {
 
 .result-timeTaken {
     margin-top: 60px;
+}
+
+
+/* Modal Style */
+
+.modal-outer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+}
+
+.modal-inner {
+    background-color: var(--clr-primary-9);
+    top: 0;
+    width: 95vw;
+    height: 95vh;
+    padding: 40px;
+    transform: translateY(-200%);
+    transition: transform 1s ease-in;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-outer.open {
+    opacity: 10;
+    pointer-events: all;
+}
+
+.modal-outer.open .modal-inner {
+    transform: translateY(0);
+}
+
+.modal-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-title {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.modal-title {
+    margin: 10px auto;
+    color: var(--clr-green-dark);
+}
+
+.allPlanet {
+    width: 500px;
+    height: 120px;
+}
+
+.vehicleImgs img {
+    width: 210px;
+    height: 100px;
+}
+
+.modal-images h3 {
+    color: var(--clr-green-dark);
+    letter-spacing: var(--spacing);
+    font-family: var(--ff-primary);
+    font-size: 1.5rem;
+}
+
+.vehicleImgs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+}
+
+.modal-container-btn {
+    margin: 20px auto;
 }
 
 @media screen and (max-width: 802px) {

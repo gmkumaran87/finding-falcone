@@ -3,43 +3,39 @@ class UI {
 
     }
 
+    capitalize = (elem) => elem.split(' ').map(e => e.charAt(0).toUpperCase() + e.slice(1));
+
+
     showDropDownList(elem, planetArr) {
         elem.innerHTML = ``;
 
-        for (let i = 0; i < planetArr.length; i++) {
-            elem.innerHTML += `<option value = ${planetArr[i]}></option>`;
-        }
-
+        planetArr.forEach(planet => elem.innerHTML += `<option value = ${planet}></option>`);
 
     }
 
     showRadioButton(currEl, planet, vehicles) {
 
-        const newVehicles = vehicles.filter(el => {
-            return el.max_distance >= planet.distance;
-        })
+        const newVehicles = vehicles.filter(el => el.max_distance >= planet.distance)
 
         let form = document.getElementById(`vehicle-${currEl.name}`).firstElementChild
 
 
         form.innerHTML = '';
         newVehicles.forEach(el => {
-            let n = el.name.split(' ').map(e => {
-                return e.charAt(0).toUpperCase() + e.slice(1);
-            }).join('');
 
-            let n1 = el.name.split(' ').map(e => {
-                return e.charAt(0).toUpperCase() + e.slice(1);
-            }).join(' ');
+            let idName = this.capitalize(el.name).join('');
 
-            form.innerHTML += `<label for="${currEl.name}-${n}" class="radio-btn">
-                    <input type = "radio" id="${currEl.name}-${n}" data-name="${el.name}" data-number="${el.total_no}" name="${currEl.name}-vehicles"> ${n1} <span> (${el.total_no})</span></label>`;
+            let labelName = this.capitalize(el.name).join(' ');
+
+            form.innerHTML += `<label for="${currEl.name}-${idName}" class="radio-btn">
+                    <input type = "radio" id="${currEl.name}-${idName}" data-name="${el.name}" data-number="${el.total_no}" name="${currEl.name}-vehicles"> ${labelName} <span> (${el.total_no})</span></label>`;
 
         })
-
     }
 
-    updateRadioButton(btn, cnt, vehicles_det) {
+    //  showListRadio(elem, )
+
+    updateRadioButton(btn, cnt) {
 
         const vehicleId = btn.id.split('-');
 
@@ -71,11 +67,4 @@ class UI {
         }
 
     }
-
-    displayResult(elem) {
-
-
-    }
-
-
 }

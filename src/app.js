@@ -1,4 +1,3 @@
-console.log('Im here')
 const toggle = document.querySelector('.nav-toggle')
 const links = document.querySelector('.links')
 
@@ -44,11 +43,9 @@ const planets = http.get('https://findfalcone.herokuapp.com/planets').then(data 
         initialPlanets.push(element.name);
     });
 
+
     // Displaying the Planets in the Dropdown list
-    inputList.forEach(list => {
-        const dropId = list.list;
-        ui.showDropDownList(dropId, initialPlanets);
-    })
+    inputList.forEach(list => ui.showDropDownList(list.list, initialPlanets))
 });
 
 
@@ -65,6 +62,7 @@ const apiToken = http.post('https://findfalcone.herokuapp.com/token', {}).then(r
     finalDetails['token'] = res.token;
 
 });
+
 
 function updateDropDown(e) {
     let currentList = [];
@@ -87,25 +85,23 @@ function updateDropDown(e) {
     currentList.push(selectedPlanet, ...otherList);
 
 
-    const currPlanet = planet_details.find(e => {
-        return e.name === selectedPlanet
+    const currPlanet = planet_details.find(e => e.name === selectedPlanet);
 
-    });
-
-    // Storing the selected Planet and its distance.
+    console.log(currPlanet)
+        // Storing the selected Planet and its distance.
     planet_dist[currElem.name] = currPlanet;
+    console.log(planet_dist)
+        // Update the Planets in the Dropdown list based on the selection
+    inputList.forEach(el => {
 
-    // Update the Planets in the Dropdown list based on the selection
-    inputList.forEach(list => {
-        const dropId = list.list;
-
-        if (list.id === currElem.id) {
-            ui.showDropDownList(dropId, currentList);
+        if (el.id === currElem.id) {
+            ui.showDropDownList(el.list, currentList);
         } else {
-            ui.showDropDownList(dropId, otherList);
+            ui.showDropDownList(el.list, otherList);
         }
-
     })
+    console.log(currElem);
+
 
     // Updating the Vehicle Radio buttons based on the Planet selected
     ui.showRadioButton(currElem, currPlanet, vehicles_details);
@@ -131,17 +127,15 @@ function btnClick(e) {
         const prevBtn = document.getElementById(`${selectedRadio[currId]}`)
         const prevCnt = parseInt(prevBtn.dataset.number) + 1;
 
-        ui.updateRadioButton(prevBtn, prevCnt, vehicles_details)
+        ui.updateRadioButton(prevBtn, prevCnt)
     }
     selectedRadio[currId] = currRadioBtn.id;
 
-    /*console.log(selectedRadio);
-    console.log(planet_dist);*/
-    ui.updateRadioButton(currRadioBtn, newCount, vehicles_details)
+    ui.updateRadioButton(currRadioBtn, newCount)
 
     const vehicle_dist = vehicles_details.find(e => e['name'] === currRadioBtn.dataset.name)['speed'];
     time += planet_dist[currId]['distance'] / vehicle_dist;
-    console.log(time);
+
     finalDetails['vehicle_names'].push(currRadioBtn.dataset.name);
 
     const timeTaken = document.querySelector('.timeTaken');
@@ -153,27 +147,34 @@ function btnClick(e) {
 
 function showResults(e) {
 
-    console.log(e.currentTarget);
-
-
     const inputData = { 'token': 'IdIggIIukusSUiEjzpIdlLlTnlyQilg', 'planet_names': ["Donlon", "Enchai", "Jebing", "Lerbin"], 'vehicle_names': ["Space pod", "Space rocket", "Space shuttle", "Space ship"] }
-
-    console.log(finalDetails);
 
     // Finding the Al Falcone
     const finalResult = http.post('https://findfalcone.herokuapp.com/find', finalDetails).then(res => {
-        console.log(res.planet_name);
-        console.log(res.status);
-        console.log(time);
+
         window.location = `result.html?time=${time}&planet=${res.planet_name}&status=${res.status}`;
     });
-
-
 }
 
 inputList.forEach(elem => {
     elem.addEventListener('change', updateDropDown);
 })
 
+const rules = document.querySelector('.rules');
+const modalOuter = document.querySelector('.modal-outer')
 
+rules.addEventListener('click', function(e) {
+    console.log(rules)
+    modalOuter.classList.add('open');
+})
+
+const modalBtn = document.querySelector('.modal-play').addEventListener('click', function(e) {
+    modalOuter.classList.remove('open');
+})
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        modalOuter.classList.remove('open');
+    }
+})
 resultBtn.addEventListener('click', showResults);
